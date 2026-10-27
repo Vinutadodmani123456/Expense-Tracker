@@ -59,7 +59,7 @@ export const WelcomeHeader = ({
           </div>
           <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
             {greeting},{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-midnight-900 via-indigo-950 to-slate-800">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-midnight-900 via-slate-800 to-mint-600">
               {userName}
             </span>
           </h1>

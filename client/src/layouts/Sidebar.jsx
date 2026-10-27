@@ -109,16 +109,16 @@ export const Sidebar = ({
           </button>
         </div>
 
-        {/* User Profile Section with Edit Purpose */}
-        <div className="px-5 py-5 border-b border-slate-800/80 bg-slate-900/40 flex flex-col items-center text-center">
-          {/* Circular Avatar with Gradient & Initials */}
+        {/* User Profile Section with Edit Purpose (Dashboard Theme Matched) */}
+        <div className="px-5 py-5 border-b border-slate-800/80 bg-gradient-to-b from-slate-900/60 to-midnight-950/40 flex flex-col items-center text-center">
+          {/* Circular Avatar with Dashboard Mint Gradient & Initials */}
           <div className="relative mb-3">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#6366F1] via-[#8B5CF6] to-[#A855F7] flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-indigo-500/25 ring-2 ring-purple-400/30 select-none">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-mint-400 via-mint-500 to-mint-600 flex items-center justify-center text-midnight-950 font-black text-xl shadow-lg shadow-mint-500/20 ring-2 ring-mint-400/30 select-none">
               {getInitials(userName)}
             </div>
             {/* Active Green Status Dot */}
             <span
-              className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-500 border-2 border-midnight-950 rounded-full shadow-sm"
+              className="absolute bottom-0 right-0 w-4 h-4 bg-mint-400 border-2 border-midnight-950 rounded-full shadow-sm"
               title="Active User"
             />
           </div>
@@ -128,7 +128,7 @@ export const Sidebar = ({
             <div className="w-full flex flex-col items-center">
               <div className="flex items-center justify-center gap-1.5 group max-w-full">
                 <span
-                  className="text-sm font-bold text-white tracking-wide uppercase truncate cursor-pointer hover:text-purple-300 transition-colors"
+                  className="text-sm font-bold text-white tracking-wide uppercase truncate cursor-pointer hover:text-mint-400 transition-colors"
                   title="Click to edit name"
                   onClick={() => {
                     setTempName(userName);
@@ -142,14 +142,17 @@ export const Sidebar = ({
                     setTempName(userName);
                     setIsEditing(true);
                   }}
-                  className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors"
+                  className="p-1 rounded-md text-slate-400 hover:text-mint-400 hover:bg-mint-500/10 transition-colors"
                   aria-label="Edit user name"
                   title="Edit user name"
                 >
                   <Pencil className="w-3.5 h-3.5" />
                 </button>
               </div>
-              <p className="text-xs text-slate-400 mt-0.5 font-medium">Personal Account</p>
+              <div className="flex items-center gap-1.5 mt-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-mint-400" />
+                <p className="text-xs text-slate-400 font-medium">Personal Account</p>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSave} className="w-full mt-1">
@@ -161,13 +164,13 @@ export const Sidebar = ({
                   onKeyDown={handleKeyDown}
                   autoFocus
                   maxLength={40}
-                  className="w-full bg-slate-900 border border-purple-500/80 text-white text-xs font-semibold rounded-lg px-2.5 py-1.5 pr-14 focus:outline-none focus:ring-2 focus:ring-purple-500/40 shadow-inner uppercase"
+                  className="w-full bg-slate-900 border border-mint-500/80 text-white text-xs font-semibold rounded-lg px-2.5 py-1.5 pr-14 focus:outline-none focus:ring-2 focus:ring-mint-500/30 shadow-inner uppercase"
                   placeholder="Enter your name"
                 />
                 <div className="absolute right-1 flex items-center gap-0.5">
                   <button
                     type="submit"
-                    className="p-1 text-emerald-400 hover:text-emerald-300 hover:bg-slate-800 rounded transition"
+                    className="p-1 text-mint-400 hover:text-mint-300 hover:bg-slate-800 rounded transition"
                     title="Save (Enter)"
                     aria-label="Save name"
                   >
