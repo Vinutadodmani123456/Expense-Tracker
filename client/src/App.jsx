@@ -23,6 +23,19 @@ export function App() {
   const [globalError, setGlobalError] = useState(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
+  // User Profile state
+  const [userName, setUserName] = useState(() => {
+    return localStorage.getItem('spendsphere_user_name') || 'SAHANA MARIGOUDRA';
+  });
+
+  const handleUpdateUserName = (newName) => {
+    setUserName(newName);
+    localStorage.setItem('spendsphere_user_name', newName);
+    toast.success(`User name updated to "${newName}"`, {
+      icon: '👤'
+    });
+  };
+
   // Transaction Filters & Pagination
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
@@ -275,6 +288,8 @@ export function App() {
         mobileOpen={mobileOpen}
         setMobileOpen={setMobileOpen}
         dbConnected={dbConnected}
+        userName={userName}
+        onUpdateUserName={handleUpdateUserName}
       />
 
       {/* Main Content Area */}
@@ -282,6 +297,7 @@ export function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
           {/* Welcome Header */}
           <WelcomeHeader
+            userName={userName}
             period={period}
             setPeriod={(newPeriod) => {
               setPeriod(newPeriod);

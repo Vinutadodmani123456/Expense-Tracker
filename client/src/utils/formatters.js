@@ -109,3 +109,15 @@ export const getCategoryMeta = (category) => {
 
   return map[category] || { bg: 'bg-slate-100 text-slate-700 border-slate-200', dot: 'bg-slate-400' };
 };
+
+/**
+ * Extract 2-letter uppercase initials from full name (e.g. 'SAHANA MARIGOUDRA' -> 'SM')
+ */
+export const getInitials = (name) => {
+  if (!name || typeof name !== 'string') return 'SM';
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return 'SM';
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+};
+

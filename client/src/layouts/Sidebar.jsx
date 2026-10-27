@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   LayoutDashboard,
   ReceiptText,
@@ -7,16 +7,54 @@ import {
   Sparkles,
   Database,
   X,
-  ChevronRight
+  ChevronRight,
+  Pencil,
+  Check
 } from 'lucide-react';
+import { getInitials } from '../utils/formatters.js';
 
 export const Sidebar = ({
   activeTab,
   setActiveTab,
   mobileOpen,
   setMobileOpen,
-  dbConnected = true
+  dbConnected = true,
+  userName = 'SAHANA MARIGOUDRA',
+  onUpdateUserName
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [tempName, setTempName] = useState(userName);
+
+  // Sync tempName with external userName updates
+  useEffect(() => {
+    setTempName(userName);
+  }, [userName]);
+
+  const handleSave = (e) => {
+    if (e) e.preventDefault();
+    const trimmed = tempName.trim();
+    if (!trimmed) {
+      return;
+    }
+    if (onUpdateUserName) {
+      onUpdateUserName(trimmed);
+    }
+    setIsEditing(false);
+  };
+
+  const handleCancel = () => {
+    setTempName(userName);
+    setIsEditing(false);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSave(e);
+    } else if (e.key === 'Escape') {
+      handleCancel();
+    }
+  };
+
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'analytics', label: 'Analytics', icon: PieChart },
@@ -70,6 +108,87 @@ export const Sidebar = ({
             <X className="w-5 h-5" />
           </button>
         </div>
+
+        {/* User Profile Section with Edit Purpose */}
+        <div className="px-5 py-5 border-b border-slate-800/80 bg-slate-900/40 flex flex-col items-center text-center">
+          {/* Circular Avatar with Gradient & Initials */}
+          <div className="relative mb-3">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#6366F1] via-[#8B5CF6] to-[#A855F7] flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-indigo-500/25 ring-2 ring-purple-400/30 select-none">
+              {getInitials(userName)}
+            </div>
+            {/* Active Green Status Dot */}
+            <span
+              className="absolute bottom-0 right-0 w-4 h-4 bg-emerald-500 border-2 border-midnight-950 rounded-full shadow-sm"
+              title="Active User"
+            />
+          </div>
+
+          {/* User Name & Edit Button */}
+          {!isEditing ? (
+            <div className="w-full flex flex-col items-center">
+              <div className="flex items-center justify-center gap-1.5 group max-w-full">
+                <span
+                  className="text-sm font-bold text-white tracking-wide uppercase truncate cursor-pointer hover:text-purple-300 transition-colors"
+                  title="Click to edit name"
+                  onClick={() => {
+                    setTempName(userName);
+                    setIsEditing(true);
+                  }}
+                >
+                  {userName}
+                </span>
+                <button
+                  onClick={() => {
+                    setTempName(userName);
+                    setIsEditing(true);
+                  }}
+                  className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors"
+                  aria-label="Edit user name"
+                  title="Edit user name"
+                >
+                  <Pencil className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <p className="text-xs text-slate-400 mt-0.5 font-medium">Personal Account</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSave} className="w-full mt-1">
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  value={tempName}
+                  onChange={(e) => setTempName(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  autoFocus
+                  maxLength={40}
+                  className="w-full bg-slate-900 border border-purple-500/80 text-white text-xs font-semibold rounded-lg px-2.5 py-1.5 pr-14 focus:outline-none focus:ring-2 focus:ring-purple-500/40 shadow-inner uppercase"
+                  placeholder="Enter your name"
+                />
+                <div className="absolute right-1 flex items-center gap-0.5">
+                  <button
+                    type="submit"
+                    className="p-1 text-emerald-400 hover:text-emerald-300 hover:bg-slate-800 rounded transition"
+                    title="Save (Enter)"
+                    aria-label="Save name"
+                  >
+                    <Check className="w-3.5 h-3.5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleCancel}
+                    className="p-1 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded transition"
+                    title="Cancel (Esc)"
+                    aria-label="Cancel editing"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1">Press Enter to save, Esc to cancel</p>
+            </form>
+          )}
+        </div>
+
 
         {/* Navigation Section */}
         <div className="flex-1 px-4 py-6 overflow-y-auto space-y-1.5">

@@ -4,6 +4,7 @@ import { getGreeting } from '../utils/formatters.js';
 import { PERIOD_OPTIONS } from '../utils/constants.js';
 
 export const WelcomeHeader = ({
+  userName = 'SAHANA MARIGOUDRA',
   period,
   setPeriod,
   onOpenAddModal,
@@ -57,7 +58,10 @@ export const WelcomeHeader = ({
             <span>{formattedToday}</span>
           </div>
           <h1 className="text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight">
-            {greeting}, <span className="text-transparent bg-clip-text bg-gradient-to-r from-midnight-900 to-slate-700">Financial Overview</span>
+            {greeting},{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-midnight-900 via-indigo-950 to-slate-800">
+              {userName}
+            </span>
           </h1>
           <p className="text-sm text-slate-500 mt-1">
             Monitor real-time cash flow, category breakdowns, and monthly savings limits.
