@@ -10,25 +10,34 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
-// Allowed origins
+// Allowed origins configuration
+const clientUrls = (process.env.CLIENT_URL || '')
+  .split(',')
+  .map((u) => u.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-  process.env.CLIENT_URL
-].filter(Boolean);
+  ...clientUrls
+];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, postman)
+      // Allow requests with no origin (like mobile apps, curl, postman, render health checks)
       if (!origin) return callback(null, true);
+
+      const cleanOrigin = origin.replace(/\/$/, '');
       if (
-        allowedOrigins.includes(origin) ||
+        process.env.CLIENT_URL === '*' ||
+        allowedOrigins.includes(cleanOrigin) ||
+        cleanOrigin.endsWith('.vercel.app') ||
         process.env.NODE_ENV !== 'production'
       ) {
         return callback(null, true);
       }
-      return callback(new Error('CORS policy: Not allowed by CORS'));
+      return callback(new Error(`CORS policy: Origin ${origin} not allowed`));
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

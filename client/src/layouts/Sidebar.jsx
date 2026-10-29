@@ -19,7 +19,7 @@ export const Sidebar = ({
   mobileOpen,
   setMobileOpen,
   dbConnected = true,
-  userName = 'SAHANA MARIGOUDRA',
+  userName = 'Sahana',
   onUpdateUserName
 }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -114,7 +114,7 @@ export const Sidebar = ({
           {/* Circular Avatar with Dashboard Mint Gradient & Initials */}
           <div className="relative mb-3">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-mint-400 via-mint-500 to-mint-600 flex items-center justify-center text-midnight-950 font-black text-xl shadow-lg shadow-mint-500/20 ring-2 ring-mint-400/30 select-none">
-              {getInitials(userName)}
+              {getInitials(userName || 'Sahana')}
             </div>
             {/* Active Green Status Dot */}
             <span
@@ -126,29 +126,42 @@ export const Sidebar = ({
           {/* User Name & Edit Button */}
           {!isEditing ? (
             <div className="w-full flex flex-col items-center">
-              <div className="flex items-center justify-center gap-1.5 group max-w-full">
-                <span
-                  className="text-sm font-bold text-white tracking-wide uppercase truncate cursor-pointer hover:text-mint-400 transition-colors"
-                  title="Click to edit name"
-                  onClick={() => {
-                    setTempName(userName);
-                    setIsEditing(true);
-                  }}
-                >
-                  {userName}
-                </span>
+              {userName ? (
+                <div className="flex items-center justify-center gap-1.5 group max-w-full">
+                  <span
+                    className="text-sm font-bold text-white tracking-wide uppercase truncate cursor-pointer hover:text-mint-400 transition-colors"
+                    title="Click to edit name"
+                    onClick={() => {
+                      setTempName(userName);
+                      setIsEditing(true);
+                    }}
+                  >
+                    {userName}
+                  </span>
+                  <button
+                    onClick={() => {
+                      setTempName(userName);
+                      setIsEditing(true);
+                    }}
+                    className="p-1 rounded-md text-slate-400 hover:text-mint-400 hover:bg-mint-500/10 transition-colors"
+                    aria-label="Edit user name"
+                    title="Edit user name"
+                  >
+                    <Pencil className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ) : (
                 <button
                   onClick={() => {
-                    setTempName(userName);
+                    setTempName('');
                     setIsEditing(true);
                   }}
-                  className="p-1 rounded-md text-slate-400 hover:text-mint-400 hover:bg-mint-500/10 transition-colors"
-                  aria-label="Edit user name"
-                  title="Edit user name"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-mint-500/10 border border-mint-500/30 text-mint-400 text-xs font-semibold hover:bg-mint-500/20 transition-colors animate-pulse"
                 >
-                  <Pencil className="w-3.5 h-3.5" />
+                  <Pencil className="w-3 h-3" />
+                  <span>Set Your Name →</span>
                 </button>
-              </div>
+              )}
               <div className="flex items-center gap-1.5 mt-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-mint-400" />
                 <p className="text-xs text-slate-400 font-medium">Personal Account</p>

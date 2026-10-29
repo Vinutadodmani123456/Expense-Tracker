@@ -1,4 +1,5 @@
 # SpendSphere — Full-Stack Expense Tracker & Financial Management Platform
+# SpendSphere — Full-Stack Expense Tracker & Financial Management Platform
 
 [![Node.js Version](https://img.shields.io/badge/Node.js-v18%2B-green.svg)](https://nodejs.org/)
 [![React Version](https://img.shields.io/badge/React-19.x-blue.svg)](https://react.dev/)

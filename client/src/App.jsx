@@ -25,13 +25,15 @@ export function App() {
 
   // User Profile state
   const [userName, setUserName] = useState(() => {
-    return localStorage.getItem('spendsphere_user_name') || 'SAHANA MARIGOUDRA';
+    return localStorage.getItem('spendsphere_user_name') || 'Sahana';
   });
 
   const handleUpdateUserName = (newName) => {
-    setUserName(newName);
-    localStorage.setItem('spendsphere_user_name', newName);
-    toast.success(`User name updated to "${newName}"`, {
+    const trimmed = (newName || '').trim();
+    if (!trimmed) return;
+    setUserName(trimmed);
+    localStorage.setItem('spendsphere_user_name', trimmed);
+    toast.success(`User name updated to "${trimmed}"`, {
       icon: '👤'
     });
   };
